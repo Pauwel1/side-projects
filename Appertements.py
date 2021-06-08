@@ -16,11 +16,18 @@ driver.get(url)
 html = driver.page_source
 soup = BeautifulSoup(html, "html.parser")
 
-listings = {}
-
-property_type = soup.select(".classified__header-primary-info .classified__title").text.strip()
-listings["property_types"] = property_type
+class specificities:
+    def __init__(self):
+        self
     
-print(listings)
+    def propertyType(self, url = str, listings = list):
+        
+        driver.get(url)
+        listings = {}
+        
+        property_type = soup.select(".classified__header-primary-info .classified__title").text.strip()
+        listings["property_types"] = property_type
+    
+print(specificities.listings)
 
 driver.close()
