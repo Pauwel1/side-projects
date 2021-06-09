@@ -1,4 +1,3 @@
-from logging import info
 import requests
 import re
 import bs4
@@ -11,14 +10,15 @@ import pandas as pd
 
 driver = webdriver.Chrome()
 headers = {"User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"}
-url = "https://www.immoweb.be/nl/zoeken/huis-en-appartement/te-huur?countries=BE&hasTerraceOrGarden=true&minBedroomCount=2&minPrice=900&postalCodes=1000,1040,1050,1150,1160,1170,1180,1200,1560,1600,1601,1620,1630,1640,1650,1651,1652&orderBy=cheapest"
-# html = driver.get(url)
-page = requests.get(url).text
-soup = BeautifulSoup(page, "lxml")
+url = "https://www.immoweb.be/en/search/house-and-apartment/for-rent?countries=BE&hasTerraceOrGarden=true&minBedroomCount=2&minPrice=900&postalCodes=1000,1040,1050,1150,1160,1170,1180,1200,1560,1600,1601,1620,1630,1640,1650,1651,1652&page=1&orderBy=cheapest&card=9368954"
+html = driver.get(url)
+page = driver.page_source
+soup = BeautifulSoup(page, features = "html")
 
 data = {}
-property_type = soup.select("h1", {"class" : "classified__title(text"})
+property_type = soup.select("h1", {"class" : "classified__title"})[0]
 data["property type"] = property_type
+data = pd.DataFrame([data])
 print(data)
 
 # class specificities:
